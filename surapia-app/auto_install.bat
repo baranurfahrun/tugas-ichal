@@ -53,8 +53,41 @@ if %errorlevel% neq 0 (
 echo.
 
 echo =========================================
+echo [*] Mengecek Dependensi Proyek...
+echo =========================================
+
+where composer >nul 2>&1
+if %errorlevel% equ 0 (
+    if not exist "vendor\" (
+        echo [!] Menginstal dependensi PHP ^(composer install^)...
+        call composer install
+    ) else (
+        echo [OK] Dependensi PHP sudah terinstal.
+    )
+) else (
+    echo [WARNING] Perintah 'composer' belum terbaca di terminal ini.
+    echo Silakan tutup terminal lalu jalankan 'composer install' secara manual nanti.
+)
+
+echo.
+where npm >nul 2>&1
+if %errorlevel% equ 0 (
+    if not exist "node_modules\" (
+        echo [!] Menginstal dependensi Node.js ^(npm install^)...
+        call npm install
+    ) else (
+        echo [OK] Dependensi Node.js sudah terinstal.
+    )
+) else (
+    echo [WARNING] Perintah 'npm' belum terbaca di terminal ini.
+    echo Silakan tutup terminal lalu jalankan 'npm install' secara manual nanti.
+)
+
+echo.
+echo =========================================
 echo PROSES SELESAI!
-echo PENTING: Kamu WAJIB menutup jendela Terminal / PowerShell / VS Code ini sekarang.
-echo Lalu buka kembali agar sistem bisa mengenali PHP dan NPM yang baru diinstal.
+echo Jika ada peringatan [WARNING] di atas, kamu WAJIB menutup jendela Terminal / PowerShell / VS Code ini sekarang.
+echo Lalu buka kembali terminal dan jalankan perintah yang diminta secara manual.
+echo Jika tidak ada peringatan, kamu bisa langsung menjalankan server.
 echo =========================================
 pause
